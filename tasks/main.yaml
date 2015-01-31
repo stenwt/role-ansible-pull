@@ -1,0 +1,25 @@
+---
+  - name: Required packages for Ansible to work on a schedule
+    yum: >
+      name={{item}} 
+      state=installed
+    with_items:
+      - ansible
+      - cronie-anacron
+      - sudo
+
+  - name:  User must be able to run Ansible via sudo w/o password
+    lineinfile: >
+      dest=/etc/sudoers.d/50-ansible-pull
+      line='%wheel  ALL=(ALL)       NOPASSWD: /usr/bin/ansible-pull'
+      mode=0600
+      user=root
+      group=root
+
+  - name:  Cron job runs as the user who first ran this playbook
+    cron: >
+      name="Run Ansible Pull" 
+      special_time="daily" 
+      user="{{ ansible_user_id} }" 
+      job="{{ ansible_pull_command }}" 
+      state=present
