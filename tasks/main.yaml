@@ -29,6 +29,6 @@
     cron: >
       name = "Run Ansible Pull"
       "{{ ansible_pull_schedule }}"
-      owner = "{{ ansible_user_id}}"
+      user = "{{ ansible_user_id}}"
       job = "{{ ansible_pull_command }}"
       state = present
