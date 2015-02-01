@@ -1,7 +1,7 @@
 ---
   - name: Required packages for Ansible to work on a schedule
     yum: >
-      name={{item}} 
+      name={{item}}
       state=installed
     with_items:
       - ansible
@@ -18,15 +18,15 @@
 
   - name: Install basic Ansible inventory file
     copy: >
-      src=inventory 
-      dest=/etc/ansible/inventory 
-      user=root 
+      src=inventory
+      dest=/etc/ansible/inventory
+      user=root
       mode=0644
 
   - name:  Cron job runs as the user who first ran this playbook
     cron: >
-      name = "Run Ansible Pull" 
+      'name = "Run Ansible Pull"
       "{{ ansible_pull_schedule }}"
-      user = "{{ ansible_user_id} }" 
-      job = "{{ ansible_pull_command }}" 
-      state = present
+      user = "{{ ansible_user_id} }"
+      job = "{{ ansible_pull_command }}"
+      state = present'
