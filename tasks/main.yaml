@@ -25,8 +25,8 @@
 
   - name:  Cron job runs as the user who first ran this playbook
     cron: >
-      'name = "Run Ansible Pull"
+      name = "Run Ansible Pull"
       "{{ ansible_pull_schedule }}"
-      user = "{{ ansible_user_id} }"
+      user = "{{ ansible_user_id}}"
       job = "{{ ansible_pull_command }}"
-      state = present'
+      state = present
