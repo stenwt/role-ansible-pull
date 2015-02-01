@@ -11,22 +11,24 @@
   - name:  User must be able to run Ansible via sudo w/o password
     lineinfile: >
       dest=/etc/sudoers.d/50-ansible-pull
-      line='%wheel  ALL=(ALL)       NOPASSWD: /usr/bin/ansible-pull'
+      state=present
+      create=True
       mode=0600
-      user=root
+      owner=root
       group=root
+      line='%wheel  ALL=(ALL)       NOPASSWD: /usr/bin/ansible-pull'
 
   - name: Install basic Ansible inventory file
     copy: >
       src=inventory
       dest=/etc/ansible/inventory
-      user=root
+      owner=root
       mode=0644
 
   - name:  Cron job runs as the user who first ran this playbook
     cron: >
       name = "Run Ansible Pull"
       "{{ ansible_pull_schedule }}"
-      user = "{{ ansible_user_id}}"
+      owner = "{{ ansible_user_id}}"
       job = "{{ ansible_pull_command }}"
       state = present
