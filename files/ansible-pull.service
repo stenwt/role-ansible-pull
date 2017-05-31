@@ -1,0 +1,13 @@
+[Unit]
+Description=run ansible-pull
+#After=network.target
+
+[Service]
+EnvironmentFile=-/etc/sysconfig/ansible-pull
+Type=oneshot
+ExecStart=/usr/bin/ansible-pull -U $TARGET -o
+RemainAfterExit=true
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target
