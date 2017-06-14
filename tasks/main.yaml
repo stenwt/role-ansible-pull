@@ -22,7 +22,6 @@
   - name: timer is enabled
     service:
       name: "{{ item }}"
-      state: started
       enabled: true
     with_items:
       - ansible-pull.service
